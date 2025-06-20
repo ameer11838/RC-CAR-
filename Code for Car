@@ -1,0 +1,103 @@
+// RC Car Basic Movement - Arduino C++
+// Author: Ameer Hassan
+// Description: Controls an RC car using an H-Bridge motor driver (e.g., L298N)
+// Functions: moveForward(), moveBackward(), turnLeft(), turnRight(), stopMotors()
+
+// Motor A connections
+const int ENA = 9;     // PWM control for Motor A
+const int IN1 = 8;     // Direction control
+const int IN2 = 7;     // Direction control
+
+// Motor B connections
+const int ENB = 10;    // PWM control for Motor B
+const int IN3 = 6;     // Direction control
+const int IN4 = 5;     // Direction control
+
+void setup() {
+  // Set motor pins as outputs
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+
+  pinMode(ENB, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+
+  // Stop motors at startup
+  stopMotors();
+}
+
+void loop() {
+  moveForward();
+  delay(2000);
+
+  moveBackward();
+  delay(2000);
+
+  turnLeft();
+  delay(1000);
+
+  turnRight();
+  delay(1000);
+
+  stopMotors();
+  delay(2000);
+}
+
+// Move both motors forward
+void moveForward() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+
+  analogWrite(ENA, 200); // Speed (0–255)
+  analogWrite(ENB, 200);
+}
+
+// Move both motors backward
+void moveBackward() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+
+  analogWrite(ENA, 200);
+  analogWrite(ENB, 200);
+}
+
+// Turn left by stopping right motor or reversing it
+void turnLeft() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+
+  analogWrite(ENA, 150);
+  analogWrite(ENB, 150);
+}
+
+// Turn right by stopping left motor or reversing it
+void turnRight() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+
+  analogWrite(ENA, 150);
+  analogWrite(ENB, 150);
+}
+
+// Stop both motors
+void stopMotors() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENA, 0);
+  analogWrite(ENB, 0);
+}
