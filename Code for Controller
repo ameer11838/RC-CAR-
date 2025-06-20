@@ -1,0 +1,25 @@
+const int joyX = A0;
+const int joyY = A1;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int xVal = analogRead(joyX);
+  int yVal = analogRead(joyY);
+
+  if (yVal > 700) {
+    Serial.println("F");  // Forward
+  } else if (yVal < 300) {
+    Serial.println("B");  // Backward
+  } else if (xVal > 700) {
+    Serial.println("R");  // Right
+  } else if (xVal < 300) {
+    Serial.println("L");  // Left
+  } else {
+    Serial.println("S");  // Stop
+  }
+
+  delay(200);  // small delay to reduce serial spam
+}
